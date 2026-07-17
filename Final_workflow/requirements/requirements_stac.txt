@@ -1,0 +1,69 @@
+# SR4LC Environment
+
+# Tested with Python 3.10
+
+# Install with:
+
+# pip install -r requirements.txt
+
+# =========================
+# SEN2SR
+# =========================
+
+sen2sr
+mlstac
+
+# =========================
+
+# Geospatial
+
+# =========================
+
+geopandas
+fiona
+shapely
+pyproj
+
+rasterio
+rioxarray
+xarray
+dask
+
+# =========================
+
+# Scientific Python
+
+# =========================
+
+numpy
+pandas
+matplotlib
+
+# =========================
+
+# Deep Learning
+
+# =========================
+
+torch
+lightning
+mamba-ssm
+
+# =========================
+
+# Optional Segmentation
+
+# =========================
+
+opencv-python
+scikit-image
+scikit-learn
+
+# =========================
+
+# Utilities
+
+# =========================
+
+tqdm
+pyyaml

@@ -1,0 +1,16 @@
+# Python
+__pycache__/
+*.py[cod]
+
+# Models
+*.safetensor
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Windows
+Thumbs.db
+Desktop.ini
+
+# macOS
+.DS_Store

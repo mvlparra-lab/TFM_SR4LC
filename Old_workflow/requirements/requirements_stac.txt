@@ -1,0 +1,25 @@
+# STAC2Cube / EO Cube Processing Environment
+# Tested with Python 3.10
+#
+# Install with:
+# pip install -r requirements_stac.txt
+
+geopandas
+fiona
+shapely
+pyproj
+
+rasterio
+rioxarray
+xarray
+dask
+
+numpy
+pandas
+matplotlib
+
+pystac-client
+odc-stac
+planetary-computer
+
+torch
