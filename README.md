@@ -1,4 +1,4 @@
-# Evaluation of Super-Resolution Techniques for Sentinel-2 Land Cover Classification (SR4LC)
+# SR4LC – Evaluation of Super-Resolution Techniques for Sentinel-2 Land Cover Classification
 
 ## Overview
 
@@ -6,13 +6,19 @@ This repository contains the scripts and documentation developed during my Maste
 
 **"Evaluation of Super-Resolution Techniques for Sentinel-2 Land Cover Classification"**
 
-The work was carried out during an internship at **Planetek Italia** within the **SR4LC (Super Resolution for Land Cover Classification)** project.
+The work was carried out during an internship at **Planetek Italia** within the **SR4LC (Super-Resolution for Land Cover Classification)** project.
 
-The objective of the project is to evaluate the impact of image super-resolution on land cover classification by comparing the performance of semantic segmentation workflows using original Sentinel-2 imagery (10 m) and Sentinel-2 imagery super-resolved to 2.5 m using SEN2SR.
+---
+
+## Abstract
+
+**SR4LC** investigates whether deep learning-based super-resolution can improve semantic land cover classification from Sentinel-2 imagery. The proposed workflow combines image super-resolution using **SEN2SR**, semantic segmentation with **UNet**, and quantitative evaluation through confusion matrices and Overall Accuracy (OA). This repository documents the complete methodology developed during the project, from image preprocessing to model evaluation.
 
 > **Note**
 >
-> Due to confidentiality restrictions, this repository only contains the scripts developed by the author. The core processing pipeline provided by Planetek Italia is proprietary and cannot be publicly distributed.
+> Due to confidentiality restrictions, this repository only contains the scripts developed by the author.
+>
+> The core processing pipeline provided by **Planetek Italia** is proprietary and cannot be publicly distributed.
 >
 > To document the work carried out during the internship, the repository includes both the scripts used in the final workflow and earlier experimental versions developed throughout the project.
 
@@ -20,11 +26,13 @@ The objective of the project is to evaluate the impact of image super-resolution
 
 # Objectives
 
-- Generate super-resolved Sentinel-2 imagery using SEN2SR.
+The main objectives of the project are:
+
+- Generate super-resolved Sentinel-2 imagery using **SEN2SR**.
 - Build semantic segmentation datasets from Sentinel-2 imagery and Coastal Zones reference data.
-- Train a UNet semantic segmentation model.
+- Train a **UNet** semantic segmentation model.
 - Perform semantic segmentation inference on large Sentinel-2 scenes.
-- Evaluate the classification results using confusion matrices and Overall Accuracy (OA).
+- Evaluate the classification performance using confusion matrices and Overall Accuracy (OA).
 
 ---
 
@@ -39,15 +47,19 @@ The study focuses on coastal regions of Italy using:
 
 # Workflow
 
+The complete workflow implemented during the project is summarized below.
+
+> *(A workflow figure will be added here.)*
+
 ```
 Sentinel-2 Composites
         │
         ▼
  Super-Resolution
-    (SEN2SR)
+     (SEN2SR)
         │
         ▼
- Dataset Creation
+ Dataset Generation
 (Image + Labels)
         │
         ▼
@@ -62,13 +74,11 @@ Sentinel-2 Composites
        (UNet)
         │
         ▼
-     Inference
+ Large Image Inference
         │
         ▼
- Confusion Matrix
-        │
-        ▼
- Overall Accuracy
+      Validation
+ (Confusion Matrix + OA)
 ```
 
 ---
@@ -77,53 +87,89 @@ Sentinel-2 Composites
 
 The repository is organized into two main folders to distinguish between the scripts used in the final methodology and those developed during earlier stages of the project.
 
-## Final_Workflow
+## Final_workflow
 
 This folder contains the scripts corresponding to the final workflow presented in the Master's Thesis.
 
-These scripts implement the methodology described in the dissertation, including:
+It includes:
 
-- Super-resolution with SEN2SR
-- Dataset preparation
+- Super-resolution using SEN2SR
+- Dataset generation
 - Dataset optimization
-- Model training
+- Semantic segmentation
 - Large-image inference
 - Validation
 
-## Old_Workflow
+---
+
+## Old_workflow
 
 This folder contains previous versions of the workflow, experimental implementations and debugging scripts developed throughout the project.
 
-Many of these scripts were created while testing different approaches, troubleshooting issues or adapting the workflow to the Lightning AI environment. Although they are not part of the final methodology, they document the evolution of the project and the development process that led to the final workflow.
+Although these scripts are not part of the final methodology, they document the evolution of the project and the different approaches explored during development.
 
 ---
 
 # Repository Structure
 
 ```
-.
+TFM_SR4LC/
+│
 ├── README.md
-├── Final_Workflow/
-│   ├── ...
-├── Old_Workflow/
-│   ├── ...
-└── docs/
+├── Final_workflow/
+│   ├── 1_SuperResolution/
+│   ├── 2_Segmentation/
+│   ├── 3_Validation/
+│   ├── model/
+│   └── requirements/
+│
+└── Old_workflow/
 ```
+
+---
+
+# Repository Contents
+
+This repository contains:
+
+- Python scripts
+- Workflow documentation
+- Model loading utilities
+- Configuration files
+- Validation scripts
+
+This repository does **not** include:
+
+- Sentinel-2 imagery
+- Training datasets
+- Trained model weights (`*.safetensor`)
+- Proprietary Planetek Italia code
 
 ---
 
 # Technologies
 
+## Programming
+
 - Python
+
+## Deep Learning
+
 - PyTorch
 - PyTorch Lightning
-- Lightning AI
 - LitData
-- Rasterio
+
+## Geospatial
+
 - GDAL
+- Rasterio
 - QGIS
+
+## Earth Observation
+
 - Sentinel-2
 - SEN2SR
+- Lightning AI
 
 ---
 
@@ -139,4 +185,14 @@ University of Girona (UNIGIS Girona)
 
 # Acknowledgements
 
-This work was developed during an internship at **Planetek Italia** within the **SR4LC (Super Resolution for Land Cover Classification)** project.
+This work was developed during an internship at **Planetek Italia** as part of the **SR4LC (Super-Resolution for Land Cover Classification)** project.
+
+The author gratefully acknowledges the support of the GeoAI team and all the guidance provided throughout the internship.
+
+---
+
+# Citation
+
+If you use this repository in your research, please cite the corresponding Master's Thesis.
+
+*A `CITATION.cff` file will be added in a future release.*
