@@ -18,9 +18,9 @@ This repository contains the scripts and documentation developed during my Maste
 
 **Evaluation of Super-Resolution Techniques for Sentinel-2 Land Cover Classification**
 
-The work was carried out during an internship at **Planetek Italia** within the **SR4LC (Super-Resolution for Land Cover Classification)** project.
+The work was carried out during an internship at **Planetek Italia** as part of the **SR4LC (Super-Resolution for Land Cover Classification)** project.
 
-The objective of SR4LC is to evaluate whether applying deep learning-based super-resolution to Sentinel-2 imagery improves semantic land cover classification.
+The objective of SR4LC is to assess whether deep learning-based super-resolution of Sentinel-2 imagery improves semantic land cover classification performance.
 
 <p align="center">
   <img src="images/original_vs_sr.png" width="850">
@@ -36,7 +36,7 @@ SR4LC investigates whether deep learning-based super-resolution can improve sema
 
 The proposed workflow combines image super-resolution using **SEN2SR**, semantic segmentation with **UNet**, and quantitative evaluation through confusion matrices and **Overall Accuracy (OA)**.
 
-This repository documents the complete methodology developed during the project, from image preprocessing to model evaluation.
+This repository documents the complete methodology developed during the project, from image preprocessing and super-resolution to semantic segmentation and model evaluation.
 
 > **Note**
 >
@@ -73,7 +73,7 @@ The study focuses on coastal regions of Italy using:
 
 The workflow implemented during the project consists of the following stages:
 
-1. Sentinel-2 image preprocessing
+1. Sentinel-2 data preparation
 2. Image super-resolution using SEN2SR
 3. Dataset generation
 4. Dataset optimization with LitData
@@ -91,7 +91,7 @@ The repository is organized into two main folders.
 
 Contains the scripts corresponding to the final methodology presented in the Master's Thesis.
 
-Including:
+It includes:
 
 - Super-resolution
 - Dataset generation
@@ -104,7 +104,7 @@ Including:
 
 ## Old_workflow
 
-Contains previous versions of the workflow, experimental implementations and debugging scripts developed throughout the project.
+Contains previous versions of the workflow, experimental implementations, and debugging scripts developed throughout the project.
 
 Although these scripts are not part of the final methodology, they document the evolution of the project and the different approaches explored during development.
 
@@ -137,12 +137,12 @@ TFM_SR4LC/
 |----------|--------------|
 | Python scripts | Sentinel-2 imagery |
 | Workflow documentation | Training datasets |
-| Configuration files | Trained model weights (`*.safetensor`) |
+| Configuration files | Pre-trained model weights (`*.safetensor`) |
 | Validation scripts | Proprietary Planetek Italia code |
 
 ---
 
-# Results
+# Workflow Outputs
 
 The workflow produces:
 
@@ -166,6 +166,7 @@ The workflow produces:
 
 - PyTorch
 - PyTorch Lightning
+- Lightning AI
 - LitData
 
 ### Geospatial
@@ -178,7 +179,25 @@ The workflow produces:
 
 - Sentinel-2
 - SEN2SR
-- Lightning AI
+
+---
+
+# Getting Started
+
+The final workflow is organized into three main stages:
+
+1. **Super-resolution** (`Final_workflow/1_SuperResolution`)
+   - Generate super-resolved Sentinel-2 imagery using SEN2SR.
+
+2. **Semantic Segmentation** (`Final_workflow/2_Segmentation`)
+   - Prepare the dataset.
+   - Optimize the data with LitData.
+   - Train the UNet model.
+   - Perform large-image inference.
+
+3. **Validation** (`Final_workflow/3_Validation`)
+   - Evaluate the classification results.
+   - Generate validation metrics and supporting outputs.
 
 ---
 
@@ -194,9 +213,7 @@ GitHub automatically generates citation formats (APA, BibTeX, etc.) through the 
 
 **María Victoria León Parra**
 
-Master's in GIS & Spatial Data Science
-
-University of Girona (UNIGIS Girona)
+Master's Thesis – University of Girona (UNIGIS Girona)
 
 ---
 
