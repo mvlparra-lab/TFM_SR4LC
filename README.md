@@ -49,8 +49,6 @@ The study focuses on coastal regions of Italy using:
 
 The complete workflow implemented during the project is summarized below.
 
-> *(A workflow figure will be added here.)*
-
 ```
 Sentinel-2 Composites
         │
