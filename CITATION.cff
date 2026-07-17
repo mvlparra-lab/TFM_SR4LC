@@ -1,0 +1,32 @@
+cff-version: 1.2.0
+title: "SR4LC – Evaluation of Super-Resolution Techniques for Sentinel-2 Land Cover Classification"
+message: "If you use this repository, please cite it."
+type: software
+
+authors:
+  - family-names: "León Parra"
+    given-names: "María Victoria"
+
+repository-code: "https://github.com/mvlparra-lab/TFM_SR4LC"
+
+license: "MIT"
+
+keywords:
+  - Remote Sensing
+  - Sentinel-2
+  - Super-Resolution
+  - Land Cover Classification
+  - Semantic Segmentation
+  - UNet
+  - Deep Learning
+  - Earth Observation
+
+abstract: >
+  Repository accompanying the Master's Thesis
+  "Evaluation of Super-Resolution Techniques for Sentinel-2 Land Cover Classification".
+  It includes the final workflow, experimental developments, and supporting
+  scripts used to evaluate the impact of Sentinel-2 super-resolution on
+  semantic land cover classification.
+
+version: "1.0.0"
+date-released: "2026-07-17"
