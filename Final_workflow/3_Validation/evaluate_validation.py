@@ -14,15 +14,6 @@ Expected fields:
     CZ_Class : Coastal Zones class
     SR_Class : super-resolution prediction
 
-Outputs:
-    - confusion_matrix_cz.csv
-    - confusion_matrix_sr.csv
-    - class_metrics_cz.csv
-    - class_metrics_sr.csv
-    - metrics_summary.csv
-    - confusion_matrix_cz.png
-    - confusion_matrix_sr.png
-
 Project: SR4LC
 Author: Victoria León Parra
 """
@@ -110,9 +101,7 @@ def validate_fields(layer):
 
 
 def prepare_data(layer, prediction_field):
-    """
-    Extracts valid reference and prediction values from the point layer.
-    """
+    """Extracts valid reference and prediction values."""
 
     reference_values = []
     prediction_values = []
@@ -178,12 +167,7 @@ def calculate_confusion_matrix(y_true, y_pred):
 
 
 def calculate_class_metrics(matrix):
-    """
-    Calculates precision, recall and F1-score for each class.
-
-    Rows represent reference classes.
-    Columns represent predicted classes.
-    """
+    """Calculates precision, recall and F1-score for each class."""
 
     metrics = []
 
@@ -231,7 +215,7 @@ def calculate_class_metrics(matrix):
 
 
 def save_confusion_matrix_csv(matrix, output_path):
-    """Saves a confusion matrix as CSV."""
+    """Saves the original confusion matrix as CSV."""
 
     matrix_df = pd.DataFrame(
         matrix,
@@ -249,11 +233,25 @@ def save_confusion_matrix_csv(matrix, output_path):
 
 
 def save_confusion_matrix_plot(matrix, title, output_path):
-    """Creates a confusion matrix figure without sklearn."""
+    """Creates a row-normalized confusion matrix figure."""
+
+    row_sums = matrix.sum(axis=1, keepdims=True)
+
+    normalized_matrix = np.divide(
+        matrix,
+        row_sums,
+        out=np.zeros_like(matrix, dtype=float),
+        where=row_sums != 0,
+    )
 
     figure, axis = plt.subplots(figsize=(12, 10))
 
-    image = axis.imshow(matrix)
+    image = axis.imshow(
+        normalized_matrix,
+        cmap="Blues",
+        vmin=0,
+        vmax=1,
+    )
 
     axis.set_title(title, fontsize=15)
     axis.set_xlabel("Predicted class", fontsize=12)
@@ -267,31 +265,26 @@ def save_confusion_matrix_plot(matrix, title, output_path):
         rotation=45,
         ha="right",
     )
+
     axis.set_yticklabels(CLASS_NAMES)
 
-    maximum_value = matrix.max()
-    threshold = maximum_value / 2 if maximum_value > 0 else 0
-
-    for row in range(matrix.shape[0]):
-        for column in range(matrix.shape[1]):
-            value = matrix[row, column]
-
-            text_color = (
-                "white"
-                if value > threshold
-                else "black"
-            )
+    for row in range(normalized_matrix.shape[0]):
+        for column in range(normalized_matrix.shape[1]):
+            value = normalized_matrix[row, column]
 
             axis.text(
                 column,
                 row,
-                str(value),
+                f"{value:.2f}",
                 ha="center",
                 va="center",
-                color=text_color,
+                color="white" if value > 0.5 else "black",
+                fontsize=10,
             )
 
-    figure.colorbar(image, ax=axis)
+    colorbar = figure.colorbar(image, ax=axis)
+    colorbar.set_label("Normalized proportion")
+
     figure.tight_layout()
 
     figure.savefig(
@@ -332,21 +325,6 @@ def evaluate_classification(
 
     class_metrics = calculate_class_metrics(matrix)
 
-    print("\nPer-class metrics")
-    print("-----------------")
-    print(
-        class_metrics[
-            [
-                "class_id",
-                "class_name",
-                "precision",
-                "recall",
-                "f1_score",
-                "support",
-            ]
-        ].round(3)
-    )
-
     macro_precision = class_metrics["precision"].mean()
     macro_recall = class_metrics["recall"].mean()
     macro_f1 = class_metrics["f1_score"].mean()
@@ -363,7 +341,7 @@ def evaluate_classification(
 
     save_confusion_matrix_plot(
         matrix,
-        f"Confusion Matrix — {classification_name}",
+        f"Normalized Confusion Matrix — {classification_name}",
         OUTPUT_DIR / f"confusion_matrix_{output_prefix}.png",
     )
 
@@ -380,27 +358,11 @@ def evaluate_classification(
     print(f"Correct predictions: {correct_predictions}")
     print(f"Overall Accuracy: {overall_accuracy:.4f}")
     print(f"Overall Accuracy: {overall_accuracy * 100:.2f}%")
+    print(f"Macro Precision: {macro_precision:.3f}")
+    print(f"Macro Recall: {macro_recall:.3f}")
+    print(f"Macro F1-score: {macro_f1:.3f}")
+    print(f"Weighted F1-score: {weighted_f1:.3f}")
 
-    print(
-        "\nMacro Precision: "
-        f"{macro_precision:.3f}"
-    )
-
-    print(
-        "Macro Recall: "
-        f"{macro_recall:.3f}"
-    )
-
-    print(
-        "Macro F1-score: "
-        f"{macro_f1:.3f}"
-    )
-
-    print(
-        "Weighted F1-score: "
-        f"{weighted_f1:.3f}"
-    )
-    
     return {
         "classification": classification_name,
         "valid_points": int(total_points),
